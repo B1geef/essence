@@ -356,7 +356,7 @@ class BtcTransaction(TableDeclarativeBase):
     value = Column(Float)
     currency = Column(Text)
     status = Column(Integer, nullable=False)
-    timestamp = Column(DateTime)
+    timestamp = Column(DateTime(timezone=False))
     # Extra notes on the transaction
     address = Column(Text)
     txid = Column(Text)

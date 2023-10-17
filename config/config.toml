@@ -28,7 +28,7 @@ fallback_language = "en"
 #engine = "postgresql+psycopg2://eseencemarket:ck7aJt1pgPsq@ep-dark-haze-497404.eu-central-1.aws.neon.tech/neondb"
 #engine = "postgresql+psycopg2://postgres:i8t4ymeZNgsh@ep-dark-haze-497404.eu-central-1.aws.neon.tech/neondb"
 #engine = "postgresql+psycopg2://postgres:ZqPCwVYCkeKOIMoGTWXG@containers-us-west-193.railway.app:6420/railway"
-engine = "postgresql+psycopg2://neondb_4ohx_user:fLNyrRWjOKghek3FmMAa8CQ9peLF8o2S@dpg-ch2gbul269v61fd8fm20-a.frankfurt-postgres.render.com/neondb_4ohx"
+engine = "postgresql+psycopg2://B1geef:MKlvxpCQ9i0z@ep-curly-tooth-24069240.eu-central-1.aws.neon.tech/neondb"
 
 
 
@@ -124,6 +124,6 @@ level = "INFO"
 # Bitcoin payment settings
 [Bitcoin]
 # Blockonomics API key
-api_key = "QT7QrQvosrHV2rnSRrW0KUH3405yV2m9ap9wpCNzI9c"
+api_key = "sMYCZtT9CdbAGGvKFohTCVxPPhe0CAKoMfaeJzfkykg"
 secret = "EssenceTest"
 debug = true

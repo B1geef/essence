@@ -360,11 +360,11 @@ ask_parent_category_name = "What should parent category be? \n "\
                             "Choose from categories below"
 
 # Order product: notes?
-ask_order_notes = "Would you like to leave a note along with the order?\n" \
-                  "💼 It will be visible to the store Managers.\n" \
-                  "\n" \
-                  "<i>Send a message with the note you want to leave, or press the Skip button below this" \
-                  " message to leave nothing.</i>"
+ask_order_notes = "Please send your address in the following format:\n" \
+                  "111 Street Name\n" \
+                  "Town\n" \
+                  "County\n" \
+                  "Post Code"
 
 # Refund product: reason?
 ask_refund_reason = " Attach a reason to this refund.\n" \

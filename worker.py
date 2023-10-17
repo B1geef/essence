@@ -14,9 +14,10 @@ from typing import *
 import requests
 from blockonomics import Blockonomics
 import sqlalchemy
+import sqlalchemy.sql
 import telegram
 from dao import get_products
-
+from sqlalchemy.sql import func
 import database as db
 import localization
 import nuconfig
@@ -455,8 +456,7 @@ class Worker(threading.Thread):
         # Loop used to returning to the menu after executing a command
         while True:
             # Create a keyboard with the user main menu
-            keyboard = [[telegram.KeyboardButton(self.loc.get("menu_order"))],
-                        [telegram.KeyboardButton(self.loc.get("menu_products_categories"))],
+            keyboard = [[telegram.KeyboardButton(self.loc.get("menu_products_categories"))],
                         [telegram.KeyboardButton(self.loc.get("menu_order_status"))],
                         [telegram.KeyboardButton(self.loc.get("menu_add_credit"))],
                         [telegram.KeyboardButton(self.loc.get("menu_language"))],
@@ -469,7 +469,6 @@ class Worker(threading.Thread):
                                   reply_markup=telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
             # Wait for a reply from the user
             selection = self.__wait_for_specific_message([
-                self.loc.get("menu_order"),
                 self.loc.get("menu_products_categories"),
                 self.loc.get("menu_order_status"),
                 self.loc.get("menu_add_credit"),
@@ -753,9 +752,9 @@ class Worker(threading.Thread):
         cancel = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_skip"),
                                                                                callback_data="cmd_cancel")]])
         # Ask if the user wants to add notes to the order
-        self.bot.send_message(self.chat.id, self.loc.get("ask_order_notes"), reply_markup=cancel)
+        self.bot.send_message(self.chat.id, self.loc.get("ask_order_notes"))
         # Wait for user input
-        notes = self.__wait_for_regex(r"(.*)", cancellable=True)
+        notes = self.__wait_for_regex(r"(.*)", cancellable=False)
         # Create a new Order
         order = db.Order(user=self.user,
                          creation_date=datetime.datetime.now(),
@@ -1041,7 +1040,7 @@ class Worker(threading.Thread):
             # Update btc_price, satoshi, currency, timestamp
             transaction.btc_price = btc_price
             transaction.currency = self.cfg["Payments"]["currency"]
-            transaction.timestamp = int(datetime.datetime.now().timestamp())
+            transaction.timestamp = func.to_timestamp(int(datetime.datetime.now().timestamp()))
         else:
             btc_address = Blockonomics.new_address().json()["address"]
             # Create a new database btc transaction
@@ -1050,7 +1049,7 @@ class Worker(threading.Thread):
                                          value=0,
                                          currency = self.cfg["Payments"]["currency"],
                                          status = -1,
-                                         timestamp = int(datetime.datetime.now().timestamp()),
+                                         timestamp=func.to_timestamp(int(datetime.datetime.now().timestamp())),
                                          address=btc_address,
                                          txid='')
             #Add and commit the btc transaction
