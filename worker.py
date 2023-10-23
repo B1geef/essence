@@ -678,14 +678,12 @@ class Worker(threading.Thread):
                 if product.image is None:
                     self.bot.edit_message_text(chat_id=self.chat.id,
                                                message_id=callback.message.message_id,
-                                               text=product.text(w=self,
-                                                                 cart_qty=cart[callback.message.message_id][1]),
+                                               text=f"Quantity: {cart_qty=cart[callback.message.message_id][1]}",
                                                reply_markup=product_inline_keyboard)
                 else:
                     self.bot.edit_message_caption(chat_id=self.chat.id,
                                                   message_id=callback.message.message_id,
-                                                  caption=product.text(w=self,
-                                                                       cart_qty=cart[callback.message.message_id][1]),
+                                                  caption=f"Quantity: {cart_qty=cart[callback.message.message_id][1]}",
                                                   reply_markup=product_inline_keyboard)
 
                 self.bot.edit_message_text(
