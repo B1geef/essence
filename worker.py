@@ -1068,11 +1068,6 @@ class Worker(threading.Thread):
         # Set the fee to 0 to ensure no accidental discounts are applied
         return 0
 
-    def __bot_info(self):
-        """Send information about the bot."""
-        log.debug("Displaying __bot_info")
-        self.bot.send_message(self.chat.id, self.loc.get("bot_info"))
-
     def __admin_menu(self):
         """Function called from the run method when the user is an administrator.
         Administrative bot actions should be placed here."""
