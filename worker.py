@@ -621,7 +621,6 @@ class Worker(threading.Thread):
 
                 # Create a variation of the product with the new price
                 product_variation = db.Product(name=new_name,
-                                    description=main_product.description,
                                     price=new_price,
                                     category=main_product.category,
                                     sub_category=main_product.sub_category,
