@@ -676,7 +676,7 @@ class Worker(threading.Thread):
                     ])
                 # Edit both the product and the final message
                 quantity = cart_qty=cart[callback.message.message_id][1]
-                message = f"Quantity: {quantity}\nName: {w=self}\nPrice: {new_price}"
+                message = f"Quantity: {quantity}\nName: {self}\nPrice: {new_price}"
                 if product.image is None:
                     self.bot.edit_message_text(chat_id=self.chat.id,
                                                message_id=callback.message.message_id,
