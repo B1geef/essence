@@ -126,7 +126,6 @@ class Product(TableDeclarativeBase):
                 cart = w.loc.get("in_cart_format_string", quantity=cart_qty)
             else:
                 cart = ''
-            description = self.description if self.description is not None else ""
             return w.loc.get("product_format_string", name=utils.telegram_html_escape(self.name),
                              description=utils.telegram_html_escape(self.description),
                              price=str(w.Price(self.price)),
