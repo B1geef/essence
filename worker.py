@@ -675,8 +675,9 @@ class Worker(threading.Thread):
                         [telegram.InlineKeyboardButton(self.loc.get("menu_done"), callback_data="cart_done")]
                     ])
                 # Edit both the product and the final message
+                name = product.text(w=self)
                 quantity = cart_qty=cart[callback.message.message_id][1]
-                message = f"Quantity: {quantity}\nName: {self}\nPrice: {new_price}"
+                message = f"Quantity: {quantity}\nName: {name}\nPrice: {new_price}"
                 if product.image is None:
                     self.bot.edit_message_text(chat_id=self.chat.id,
                                                message_id=callback.message.message_id,
