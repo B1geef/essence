@@ -273,6 +273,7 @@ class ProductVariation(TableDeclarativeBase):
         price = self.product.price + self.variation.price_diff
         cart = ''
         return w.loc.get("variation_format_string", name=utils.telegram_html_escape(self.product.name),
+                            description=utils.telegram_html_escape(self.variation.name),
                             price=str(w.Price(price)),
                             cart=cart
                             )
