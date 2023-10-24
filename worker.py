@@ -631,11 +631,10 @@ class Worker(threading.Thread):
                 # Create the inline keyboard to add the product to the cart
                 inline_keyboard = telegram.InlineKeyboardMarkup(
                     [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
-                )
-                text_without_description = f"<code>{product_variation.name}-{product_variation.price_diff}</code>"                
+                )                
                 self.bot.edit_message_text(chat_id=self.chat.id,
                                               message_id=message['result']['message_id'],
-                                              text=text_without_description,
+                                              text=variation.text(w=self),
                                               reply_markup=inline_keyboard)
         # Create the keyboard with the cancel button
         inline_keyboard = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_cancel"),callback_data="cart_cancel")]])
@@ -676,6 +675,7 @@ class Worker(threading.Thread):
                         [telegram.InlineKeyboardButton(self.loc.get("menu_done"), callback_data="cart_done")]
                     ])
                 # Edit both the product and the final message
+
                 if product.image is None:
                     self.bot.edit_message_text(chat_id=self.chat.id,
                                                message_id=callback.message.message_id,
