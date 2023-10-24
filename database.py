@@ -248,9 +248,10 @@ class Variation(TableDeclarativeBase):
 
     def send_as_message(self, w: "worker.Worker", chat_id: int) -> dict:
         """Send a message containing the variation data."""
+        variation_info = f"<code>{self.name}-{self.price_diff}</code>"
         r = requests.get(f"https://api.telegram.org/bot{w.cfg['Telegram']['token']}/sendMessage",
                             params={"chat_id": chat_id,
-                                    "text": self.text(w),
+                                    "text": variation_info,
                                     "parse_mode": "HTML"})
         return r.json()    
 
