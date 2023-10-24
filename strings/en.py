@@ -22,7 +22,7 @@ product_format_string = "<b>{name}</b>\n" \
                         "<b>{cart}</b>"
 
 # Variation information
-variation_format_string = "<b>{name}</b> - {description}\n" \
+variation_format_string = "<b>{name}</b>\n" \
                           "{price}"\
                           "<b>{cart}</b>"
 
