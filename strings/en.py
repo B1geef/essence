@@ -17,6 +17,7 @@ in_cart_format_string = "{quantity} in cart"
 
 # Product information
 product_format_string = "<b>{name}</b>\n" \
+                        "{description}\n" \
                         "{price}\n" \
                         "<b>{cart}</b>"
 
