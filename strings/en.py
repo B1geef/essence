@@ -4,7 +4,7 @@
 # Part of the translation by https://github.com/DarrenWestwood
 
 # Currency symbol
-currency_symbol = "€"
+currency_symbol = "£"
 
 # Positioning of the currency symbol
 currency_format_string = "{symbol} {value}"
@@ -17,12 +17,11 @@ in_cart_format_string = "{quantity} in cart"
 
 # Product information
 product_format_string = "<b>{name}</b>\n" \
-                        "{description}\n" \
                         "{price}\n" \
                         "<b>{cart}</b>"
 
 # Variation information
-variation_format_string = "<b>{name}</b>\n" \
+variation_format_string = "<b>{name}</b> - {description}\n" \
                           "{price}"\
                           "<b>{cart}</b>"
 
