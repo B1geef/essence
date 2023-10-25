@@ -603,12 +603,12 @@ class Worker(threading.Thread):
             if product.image is None:
                 self.bot.edit_message_text(chat_id=self.chat.id,
                                         message_id=message['result']['message_id'],
-                                        text=product.text(w=self),
+                                        text=product.name,
                                         reply_markup=inline_keyboard)
             else:
                 self.bot.edit_message_caption(chat_id=self.chat.id,
                                             message_id=message['result']['message_id'],
-                                            caption=product.text(w=self),
+                                            caption=product.name,
                                             reply_markup=inline_keyboard)
             # # Show variants if there is any
             product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
