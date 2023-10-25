@@ -605,7 +605,7 @@ class Worker(threading.Thread):
                 )
 
             else:
-                inline_keyboard = telegram.InlineKeyboardMarkup([])
+                inline_keyboard = telegram.InlineKeyboardMarkup([""])
 
 
             if product.image is None:
