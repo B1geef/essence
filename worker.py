@@ -619,31 +619,32 @@ class Worker(threading.Thread):
                                             caption=product.text(w=self),
                                             reply_markup=inline_keyboard)
             # # Show variants if there is any
-            product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
-            for variation in product_variations:
-                message = variation.send_as_message(w=self, chat_id=self.chat.id)
+            if product.variations is not None:
+                product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
+                for variation in product_variations:
+                    message = variation.send_as_message(w=self, chat_id=self.chat.id)
                 
-                main_product = variation.product
-                new_name = f"{main_product.name} - {variation.variation.name}"
-                new_price = main_product.price + variation.variation.price_diff
+                    main_product = variation.product
+                    new_name = f"{main_product.name} - {variation.variation.name}"
+                    new_price = main_product.price + variation.variation.price_diff
 
-                # Create a variation of the product with the new price
-                product_variation = db.Product(name=new_name,
-                                    price=new_price,
-                                    description="",
-                                    category=main_product.category,
-                                    sub_category=main_product.sub_category,
-                                    deleted=True)
-                # Add the product to the cart
-                cart[message['result']['message_id']] = [product_variation, 0]                
-                # Create the inline keyboard to add the product to the cart
-                inline_keyboard = telegram.InlineKeyboardMarkup(
-                    [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
-                )                
-                self.bot.edit_message_text(chat_id=self.chat.id,
-                                              message_id=message['result']['message_id'],
-                                              text=variation.text(w=self),
-                                              reply_markup=inline_keyboard)
+                    # Create a variation of the product with the new price
+                    product_variation = db.Product(name=new_name,
+                                        price=new_price,
+                                        description="",
+                                        category=main_product.category,
+                                        sub_category=main_product.sub_category,
+                                        deleted=True)
+                    # Add the product to the cart
+                    cart[message['result']['message_id']] = [product_variation, 0]                
+                    # Create the inline keyboard to add the product to the cart
+                    inline_keyboard = telegram.InlineKeyboardMarkup(
+                        [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
+                    )                
+                    self.bot.edit_message_text(chat_id=self.chat.id,
+                                                  message_id=message['result']['message_id'],
+                                                  text=variation.text(w=self),
+                                                  reply_markup=inline_keyboard)
         # Create the keyboard with the cancel button
         inline_keyboard = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_cancel"),callback_data="cart_cancel")]])
         # Send a message containing the button to cancel or pay
