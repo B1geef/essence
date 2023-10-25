@@ -600,12 +600,12 @@ class Worker(threading.Thread):
 
             if product.variations is None:
 
-            inline_keyboard = telegram.InlineKeyboardMarkup(
-                [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
-            )
+                inline_keyboard = telegram.InlineKeyboardMarkup(
+                    [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
+                )
 
             else:
-            inline_keyboard = telegram.InlineKeyboardMarkup([])
+                inline_keyboard = telegram.InlineKeyboardMarkup([])
 
 
             if product.image is None:
