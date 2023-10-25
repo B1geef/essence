@@ -598,6 +598,8 @@ class Worker(threading.Thread):
             message = product.send_as_message(w=self, chat_id=self.chat.id)
             cart[message['result']['message_id']] = [product, 0]
 
+            inline_keyboard = None
+
             if product.variations is None:
 
                 inline_keyboard = telegram.InlineKeyboardMarkup(
@@ -605,7 +607,7 @@ class Worker(threading.Thread):
                 )
 
             else:
-                
+
                 pass
 
 
