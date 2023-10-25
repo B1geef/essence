@@ -594,18 +594,24 @@ class Worker(threading.Thread):
                 continue
             if not check_telegram_caption_length(product.description):
                 continue            
+
+            # Calculate whether the product has variations
+            product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
+            has_variations = bool(product_variations)
+
+            # Create the inline keyboard for the main product
+            if not has_variations:
+                inline_keyboard = telegram.InlineKeyboardMarkup(
+                    [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
+                )
+            else:
+                inline_keyboard = None  # No inline keyboard for the main product
+   
             # Send the message without the keyboard to get the message id
             message = product.send_as_message(w=self, chat_id=self.chat.id)
             cart[message['result']['message_id']] = [product, 0]
-            inline_keyboard = telegram.InlineKeyboardMarkup(
-                [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
-            )
-            if product.image is None:
-                if not has_variations:
-                    inline_keyboard = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]])
 
-                else:
-                    inline_keyboard = None
+            if product.image is None:
                     self.bot.edit_message_text(chat_id=self.chat.id,
                                         message_id=message['result']['message_id'],
                                         text=product.text(w=self),
