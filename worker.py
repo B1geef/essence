@@ -597,9 +597,17 @@ class Worker(threading.Thread):
             # Send the message without the keyboard to get the message id
             message = product.send_as_message(w=self, chat_id=self.chat.id)
             cart[message['result']['message_id']] = [product, 0]
+
+            if product.variations is None:
+
             inline_keyboard = telegram.InlineKeyboardMarkup(
                 [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
             )
+
+            else:
+            inline_keyboard = telegram.InlineKeyboardMarkup([])
+
+
             if product.image is None:
                 self.bot.edit_message_text(chat_id=self.chat.id,
                                         message_id=message['result']['message_id'],
