@@ -594,27 +594,14 @@ class Worker(threading.Thread):
                 continue
             if not check_telegram_caption_length(product.description):
                 continue            
-
-            # Calculate whether the product has variations
-            product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
-            has_variations = bool(product_variations)
-
-            inline_keyboard = None
-
-            # Create the inline keyboard for the main product
-            if not has_variations:
-                inline_keyboard = telegram.InlineKeyboardMarkup(
-                    [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
-                )
-            else:
-                pass
-   
             # Send the message without the keyboard to get the message id
             message = product.send_as_message(w=self, chat_id=self.chat.id)
             cart[message['result']['message_id']] = [product, 0]
-
+            inline_keyboard = telegram.InlineKeyboardMarkup(
+                [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
+            )
             if product.image is None:
-                    self.bot.edit_message_text(chat_id=self.chat.id,
+                self.bot.edit_message_text(chat_id=self.chat.id,
                                         message_id=message['result']['message_id'],
                                         text=product.text(w=self),
                                         reply_markup=inline_keyboard)
@@ -622,8 +609,10 @@ class Worker(threading.Thread):
                 self.bot.edit_message_caption(chat_id=self.chat.id,
                                             message_id=message['result']['message_id'],
                                             caption=product.text(w=self),
-                                            reply_markup=inline_keyboard) #line 623
+                                            reply_markup=inline_keyboard)
             # # Show variants if there is any
+            product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
+            has_variations = bool(product_variations)
             for variation in product_variations:
                 message = variation.send_as_message(w=self, chat_id=self.chat.id)
                 
