@@ -599,6 +599,8 @@ class Worker(threading.Thread):
             product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
             has_variations = bool(product_variations)
 
+            inline_keyboard = None
+
             # Create the inline keyboard for the main product
             if not has_variations:
                 inline_keyboard = telegram.InlineKeyboardMarkup(
@@ -620,7 +622,7 @@ class Worker(threading.Thread):
                 self.bot.edit_message_caption(chat_id=self.chat.id,
                                             message_id=message['result']['message_id'],
                                             caption=product.text(w=self),
-                                            reply_markup=inline_keyboard)
+                                            reply_markup=inline_keyboard) #line 623
             # # Show variants if there is any
             for variation in product_variations:
                 message = variation.send_as_message(w=self, chat_id=self.chat.id)
