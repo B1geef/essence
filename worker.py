@@ -601,7 +601,12 @@ class Worker(threading.Thread):
                 [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
             )
             if product.image is None:
-                self.bot.edit_message_text(chat_id=self.chat.id,
+                if not has_variations:
+                    inline_keyboard = telegram.InlineKeyboardMarkup([[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]])
+
+                else:
+                    inline_keyboard = None
+                    self.bot.edit_message_text(chat_id=self.chat.id,
                                         message_id=message['result']['message_id'],
                                         text=product.text(w=self),
                                         reply_markup=inline_keyboard)
@@ -612,6 +617,7 @@ class Worker(threading.Thread):
                                             reply_markup=inline_keyboard)
             # # Show variants if there is any
             product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
+            has_variations = bool(product_variations)
             for variation in product_variations:
                 message = variation.send_as_message(w=self, chat_id=self.chat.id)
                 
