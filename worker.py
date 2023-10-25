@@ -605,7 +605,7 @@ class Worker(threading.Thread):
                     [[telegram.InlineKeyboardButton(self.loc.get("menu_add_to_cart"), callback_data="cart_add")]]
                 )
             else:
-                inline_keyboard = None  # No inline keyboard for the main product
+                continue
    
             # Send the message without the keyboard to get the message id
             message = product.send_as_message(w=self, chat_id=self.chat.id)
