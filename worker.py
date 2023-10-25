@@ -622,8 +622,6 @@ class Worker(threading.Thread):
                                             caption=product.text(w=self),
                                             reply_markup=inline_keyboard)
             # # Show variants if there is any
-            product_variations = self.session.query(db.ProductVariation).filter_by(product_id=product.id).all()
-            has_variations = bool(product_variations)
             for variation in product_variations:
                 message = variation.send_as_message(w=self, chat_id=self.chat.id)
                 
