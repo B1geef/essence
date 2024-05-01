@@ -28,7 +28,7 @@ fallback_language = "en"
 #engine = "postgresql+psycopg2://eseencemarket:ck7aJt1pgPsq@ep-dark-haze-497404.eu-central-1.aws.neon.tech/neondb"
 #engine = "postgresql+psycopg2://postgres:i8t4ymeZNgsh@ep-dark-haze-497404.eu-central-1.aws.neon.tech/neondb"
 #engine = "postgresql+psycopg2://postgres:ZqPCwVYCkeKOIMoGTWXG@containers-us-west-193.railway.app:6420/railway"
-engine = "postgresql+psycopg2://B1geef:MKlvxpCQ9i0z@ep-curly-tooth-24069240.eu-central-1.aws.neon.tech/neondb"
+engine = "postgresql+psycopg2://B1geef:MKlvxpCQ9i0z@ep-curly-tooth-24069240.eu-central-1.aws.neon.tech/neondb?sslmode=require"
 
 
 
